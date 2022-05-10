@@ -42,7 +42,17 @@ public class BST<K extends Comparable<K>, V> {
         return root;
     }
 
-    public V get(K key) {return null;}
+    public V get(K key) {
+        return search(root, key).value;
+    }
+
+    private Node search(Node node, K key) {
+        if (node == null) return new Node(null, null);
+        if (key == node.key) return node;
+        if (key.compareTo(node.key) < 0) return search(node.left, key);
+        if (key.compareTo(node.key) > 0) return search(node.right, key);
+        return new Node(null, null);
+    }
 
     public Node getMin() {
         Node min = root;
