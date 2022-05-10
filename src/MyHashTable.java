@@ -16,15 +16,23 @@ public class MyHashTable<K, V> {
         }
     }
 
-    private HashNode<K, V>[] chainArray;
+    private Object[] chainArray;
     private int M = 11;
     private int size;
 
-    public MyHashTable() {}
+    public MyHashTable() {
+        chainArray = new Object[M];
+    }
 
-    public MyHashTable(int M) {}
+    public MyHashTable(int M) {
+        this.M = M;
+        chainArray = new Object[this.M];
+    }
 
-    private int hash(K key) {return 0;}
+    private int hash(K key) {
+        int hash = java.lang.System.identityHashCode(key);
+        return (hash & 0x7fffffff) % M;
+    }
 
     public void put(K key, V value) {}
 
