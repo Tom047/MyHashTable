@@ -12,6 +12,11 @@ public class BST<K extends Comparable<K>, V> {
             this.key = key;
             this.value = value;
         }
+
+        @Override
+        public String toString() {
+            return "{" + key + " " + value + "}";
+        }
     }
 
     public BST() {
@@ -39,7 +44,46 @@ public class BST<K extends Comparable<K>, V> {
 
     public V get(K key) {return null;}
 
-    public void delete(K key) {}
+    public Node getMin() {
+        Node min = root;
+        while (min.left != null) {
+            min = min.left;
+        }
+        return min;
+    }
+
+    public Node getMax() {
+        Node max = root;
+        while (max.right != null) {
+            max = max.right;
+        }
+        return max;
+    }
+
+    public void delete(K key) {
+        root = delete(root, key);
+    }
+
+    public Node delete(Node root, K key) {
+        if (root == null) return null;
+
+        if (key.compareTo(root.key) < 0)
+            root.left = delete(root.left, key);
+        else if (key.compareTo(root.key) > 0)
+            root.right = delete(root.right, key);
+        else {
+            if (root.left == null)
+                return root.right;
+            else if (root.right == null)
+                return root.left;
+
+            root.key = getMin().key;
+
+            root.right = delete(root.right, root.key);
+        }
+
+        return root;
+    }
 
     public Iterable<K> iterator() {
         PriorityQueue<K> q = new PriorityQueue<K>();
